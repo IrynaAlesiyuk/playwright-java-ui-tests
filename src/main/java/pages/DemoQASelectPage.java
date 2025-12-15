@@ -1,21 +1,15 @@
 package pages;
-import config.Config;
 
 import com.microsoft.playwright.Page;
 
-public class DemoQASelectPage {
+public class DemoQASelectPage extends BasePage {
 
-    private final Page page;
 
     private static final String SINGLE_SELECT = "#oldSelectMenu";
     private static final String MULTI_SELECT = "select#cars";
 
     public DemoQASelectPage(Page page) {
-        this.page = page;
-    }
-
-    public void open() {
-        page.navigate(Config.get("select.menu.path")); //example of using env based config
+        super(page);
     }
 
     public void selectSingleOption(String value) {
