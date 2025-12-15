@@ -27,4 +27,8 @@ public class BasePage {
         logger.info("Navigating to base URL: {}", baseUrl);
         page.navigate(baseUrl);
     }
+
+    public String getTitle() {
+        return page.title();
+    }
 }
