@@ -27,18 +27,7 @@ public class PlaywrightTestBase {
         browser = BrowserFactory.create(browserName, playwright);
         logger.info("Browser launched");
 
-        Browser.NewContextOptions contextOptions = new Browser.NewContextOptions();
-
-        Config.getOptional("base.url")
-                .ifPresentOrElse(
-                        url -> {
-                            contextOptions.setBaseURL(url);
-                            logger.info("Base URL configured: {}", url);
-                        },
-                        () -> logger.info("Base URL is not configured")
-                );
-
-        context = browser.newContext(contextOptions);
+        context = browser.newContext();
         logger.info("Browser context created");
 
         page = context.newPage();

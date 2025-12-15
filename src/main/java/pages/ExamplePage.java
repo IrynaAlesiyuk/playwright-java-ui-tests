@@ -1,25 +1,15 @@
 package pages;
 
 import com.microsoft.playwright.Page;
+import config.Config;
 
-public class ExamplePage {
-    private final Page page;
-
-    private static final String HEADING = "h1";
+public class ExamplePage extends BasePage {
 
     public ExamplePage(Page page) {
-        this.page = page;
-    }
-
-    public void open() {
-        page.navigate("https://example.com");
+        super(page, Config.get("example.base.url"));
     }
 
     public String getTitle() {
         return page.title();
-    }
-
-    public String getHeadingText() {
-        return page.textContent(HEADING);
     }
 }

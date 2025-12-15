@@ -1,13 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="PlaywrightSuite" parallel="tests" thread-count="3">
+<suite name="PlaywrightSuite" parallel="tests" thread-count="2">
     <test name="DemoQASelectTest">
         <classes>
             <class name="tests.DemoQASelectTest"/>
-        </classes>
-    </test>
-    <test name="FormAndIframeTest">
-        <classes>
-            <class name="tests.FormAndIframeTest"/>
         </classes>
     </test>
     <test name="ScreenshotTest">

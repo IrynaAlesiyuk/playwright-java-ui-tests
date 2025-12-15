@@ -3,9 +3,9 @@ package tests;
 import base.PlaywrightTestBase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.DemoQAButtonsPage;
-import pages.DemoQADroppablePage;
-import pages.DemoQASelectPage;
+import pages.demoqa.DemoQAButtonsPage;
+import pages.demoqa.DemoQADroppablePage;
+import pages.demoqa.DemoQASelectPage;
 
 public class DemoQASelectTest extends PlaywrightTestBase {
 
