@@ -11,17 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout the repository
+      # 1. Checkout repository
       - uses: actions/checkout@v3
 
-      # 2. Set up JDK
+      # 2. Setup JDK
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      # 3. Set up Node.js (required for Playwright)
+      # 3. Setup Node.js for Playwright
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -31,19 +31,19 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install
 
-      # 5. Build the Maven project
+      # 5. Maven build
       - name: Maven build
         run: mvn clean install
 
       # 6. Run Playwright tests
-      - name: Run Playwright tests
+      - name: Run tests
         run: mvn test
-        continue-on-error: true   # ensures the next step runs even if tests fail
+        continue-on-error: true # ensures next steps run even if tests fail
 
       # 7. Upload screenshots as artifacts
       - name: Upload screenshots
-        if: always()  # run this step regardless of test success/failure
-        uses: actions/upload-artifact@v3
+        if: always()  # upload regardless of test result
+        uses: actions/upload-artifact@v4
         with:
           name: screenshots
           path: src/test/resources/screenshots/
