@@ -48,6 +48,9 @@
             <include>**/*Tests.java</include>
             <include>**/*TestNG.java</include>
           </includes>
+          <suiteXmlFiles>
+            <suiteXmlFile>testng.xml</suiteXmlFile>
+          </suiteXmlFiles>
         </configuration>
       </plugin>
       <plugin>

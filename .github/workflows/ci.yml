@@ -37,7 +37,7 @@ jobs:
 
       # 6. Run Playwright tests
       - name: Run tests
-        run: mvn test
+        run: mvn test -DsuiteXmlFile=src/test/resources/testng.xml
         continue-on-error: true # ensures next steps run even if tests fail
 
       # 7. Upload screenshots as artifacts
