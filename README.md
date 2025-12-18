@@ -8,8 +8,6 @@ It is designed as a presentation example of how an end-to-end UI test framework 
 - clean framework architecture
 - Page Object Model (POM)
 - environment-based configuration
-- CI pipeline with GitHub Actions
-- screenshots on test failure (failingTest())
   
 🧱 Tech Stack
 - Java
@@ -17,3 +15,12 @@ It is designed as a presentation example of how an end-to-end UI test framework 
 - TestNG
 - Maven
 - GitHub Actions (CI)
+
+## CI/CD
+
+This project uses GitHub Actions to demonstrate a CI pipeline:
+- build and test execution
+- automatic screenshots on test failure
+- artifact publishing
+
+Failing test is included intentionally to demonstrate CI behavior.

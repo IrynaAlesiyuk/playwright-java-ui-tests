@@ -31,4 +31,16 @@ public class BasePage {
     public String getTitle() {
         return page.title();
     }
+
+    public void goBack() {
+        page.goBack();
+    }
+
+    public void goForward() {
+        page.goForward();
+    }
+
+    public void reload() {
+        page.reload();
+    }
 }

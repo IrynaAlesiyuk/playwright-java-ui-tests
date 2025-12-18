@@ -10,27 +10,29 @@ import pages.demoqa.DemoQASelectPage;
 public class DemoQASelectTest extends PlaywrightTestBase {
 
     @Test
-    public void navigationE2ETest() {
+    public void navigateBetweenSelectAndButtonsPages() {
+        // Arrange
         DemoQASelectPage selectPage = new DemoQASelectPage(page);
         selectPage.open("select.menu.path");
-        String selectPageTitle = page.title();
+        String selectPageTitle = selectPage.getTitle();
 
         DemoQAButtonsPage buttonsPage = new DemoQAButtonsPage(page);
         buttonsPage.open("buttons.path");
-        String buttonsPageTitle = page.title();
+        String buttonsPageTitle = buttonsPage.getTitle();
 
-        page.goBack();
-        Assert.assertEquals(page.title(), selectPageTitle,
+        // Act + Assert
+        buttonsPage.goBack();
+        Assert.assertEquals(selectPage.getTitle(), selectPageTitle,
                 "Should return to Select page after going back"
         );
 
-        page.goForward();
-        Assert.assertEquals(page.title(), buttonsPageTitle,
+        selectPage.goForward();
+        Assert.assertEquals(buttonsPage.getTitle(), buttonsPageTitle,
                 "Should return to Buttons page after going forward"
         );
 
-        page.reload();
-        Assert.assertEquals(page.title(), buttonsPageTitle,
+        buttonsPage.reload();
+        Assert.assertEquals(buttonsPage.getTitle(), buttonsPageTitle,
                 "Title after reload should remain the same"
         );
     }
