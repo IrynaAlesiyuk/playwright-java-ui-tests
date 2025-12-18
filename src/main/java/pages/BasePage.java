@@ -1,7 +1,6 @@
 package pages;
 
 import com.microsoft.playwright.Page;
-import config.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,15 +16,9 @@ public class BasePage {
         this.baseUrl = baseUrl;
     }
 
-    public void open(String pathKey) {
-        String url = baseUrl + Config.get(pathKey);
+    protected void navigateTo(String url) {
         logger.info("Navigating to URL: {}", url);
         page.navigate(url);
-    }
-
-    public void open() {
-        logger.info("Navigating to base URL: {}", baseUrl);
-        page.navigate(baseUrl);
     }
 
     public String getTitle() {

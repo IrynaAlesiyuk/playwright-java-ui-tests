@@ -2,19 +2,22 @@ package pages.demoqa;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import config.Config;
-import pages.BasePage;
 
-public class DemoQASelectPage extends BasePage {
+public class DemoQASelectPage extends DemoQABasePage {
 
 
     private final Locator singleSelect;
     private final Locator multiSelect;
+    private static final String PATH_KEY = "select.menu.path";
 
     public DemoQASelectPage(Page page) {
-        super(page, Config.get("demoqa.base.url"));
+        super(page);
         this.singleSelect = page.locator("#oldSelectMenu");
         this.multiSelect = page.locator("select#cars");
+    }
+
+    public void open() {
+        openByPath(PATH_KEY);
     }
 
     public void selectSingleOption(String value) {

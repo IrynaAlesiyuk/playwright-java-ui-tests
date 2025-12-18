@@ -16,8 +16,7 @@ public class ScreenshotTest extends PlaywrightTestBase {
         examplePage.open();
         String title = examplePage.getTitle();
 
-        Assert.assertTrue(
-                title.contains("NonExistingText"),
+        Assert.assertTrue(title.contains("NonExistingText"),
                 "Expected page title to contain 'NonExistingText', but got: " + title
         );
     }
@@ -28,8 +27,7 @@ public class ScreenshotTest extends PlaywrightTestBase {
         examplePage.open();
         String title = examplePage.getTitle();
 
-        Assert.assertTrue(
-                title.contains("Example Domain"),
+        Assert.assertTrue(title.contains("Example Domain"),
                 "Expected correct title, but got: " + title
         );
     }

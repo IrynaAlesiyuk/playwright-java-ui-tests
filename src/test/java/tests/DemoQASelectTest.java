@@ -13,11 +13,11 @@ public class DemoQASelectTest extends PlaywrightTestBase {
     public void navigateBetweenSelectAndButtonsPages() {
         // Arrange
         DemoQASelectPage selectPage = new DemoQASelectPage(page);
-        selectPage.open("select.menu.path");
+        selectPage.open();
         String selectPageTitle = selectPage.getTitle();
 
         DemoQAButtonsPage buttonsPage = new DemoQAButtonsPage(page);
-        buttonsPage.open("buttons.path");
+        buttonsPage.open();
         String buttonsPageTitle = buttonsPage.getTitle();
 
         // Act + Assert
@@ -40,7 +40,7 @@ public class DemoQASelectTest extends PlaywrightTestBase {
     @Test
     public void singleSelectTest() {
         DemoQASelectPage selectPage = new DemoQASelectPage(page);
-        selectPage.open("select.menu.path");
+        selectPage.open();
 
         selectPage.selectSingleOption("red");
         String selectedValue = selectPage.getSingleValue();
@@ -50,7 +50,7 @@ public class DemoQASelectTest extends PlaywrightTestBase {
     @Test
     public void multiSelectTest() {
         DemoQASelectPage selectPage = new DemoQASelectPage(page);
-        selectPage.open("select.menu.path");
+        selectPage.open();
 
         String[] actualValues = {"Volvo", "Saab"};
         selectPage.selectMultipleOptions(actualValues);
@@ -62,7 +62,7 @@ public class DemoQASelectTest extends PlaywrightTestBase {
     @Test
     public void doubleClickTest() {
         DemoQAButtonsPage buttonsPage = new DemoQAButtonsPage(page);
-        buttonsPage.open("buttons.path");
+        buttonsPage.open();
         buttonsPage.doubleClickButton();
 
         Assert.assertTrue(buttonsPage.isDoubleClickMessageVisible(), "Message should appear after double click");
@@ -71,7 +71,7 @@ public class DemoQASelectTest extends PlaywrightTestBase {
     @Test
     public void dragAndDropTest() {
         DemoQADroppablePage droppablePage = new DemoQADroppablePage(page);
-        droppablePage.open("droppable.path");
+        droppablePage.open();
         droppablePage.dragToDrop();
 
         String text = droppablePage.getDropText();
