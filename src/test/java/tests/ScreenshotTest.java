@@ -1,7 +1,7 @@
 package tests;
 
 import base.PlaywrightTestBase;
-import listeners.ScreenshotOnFailListener;
+import base.listeners.ScreenshotOnFailListener;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;

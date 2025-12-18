@@ -12,6 +12,15 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <playwright.version>1.44.0</playwright.version>
+    <maven.surefire.version>3.2.5</maven.surefire.version>
+    <maven.compiler.version>3.10.1</maven.compiler.version>
+    <json.vestion>20240303</json.vestion>
+    <rest.assured.version>5.5.6</rest.assured.version>
+    <testng.version>RELEASE</testng.version>
+    <slf4j.api.version>2.0.7</slf4j.api.version>
+    <logback.version>1.4.11</logback.version>
+
   </properties>
   <profiles>
     <profile>
@@ -41,7 +50,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.2.5</version>
+        <version>${maven.surefire.version}</version>
         <configuration>
           <includes>
             <include>**/*Test.java</include>
@@ -56,7 +65,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
+        <version>${maven.compiler.version}</version>
         <!-- References to interface static methods are allowed only at source level 1.8 or above -->
         <configuration>
           <source>9</source>
@@ -69,37 +78,37 @@
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
-      <version>20240303</version>
+      <version>${json.vestion}</version>
     </dependency>
     <dependency>
       <groupId>com.microsoft.playwright</groupId>
       <artifactId>playwright</artifactId>
-      <version>1.44.0</version>
+      <version>${playwright.version}</version>
     </dependency>
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
-      <version>5.5.6</version>
+      <version>${rest.assured.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>RELEASE</version>
+      <version>${testng.version}</version>
       <scope>compile</scope>
     </dependency>
     <!-- SLF4J API -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>2.0.7</version>
+      <version>${slf4j.api.version}</version>
     </dependency>
 
     <!-- Logback Classic -->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.4.11</version>
+      <version>${logback.version}</version>
     </dependency>
   </dependencies>
 </project>
