@@ -7,53 +7,67 @@ on:
   pull_request:
 
 jobs:
-  build-and-test:
+  run-tests-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       # 1. Checkout repository
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       # 2. Setup JDK
-      - name: Set up JDK
+      - name: Setup Java 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
 
       # 3. Setup Node.js for Playwright
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
       # 4. Install Playwright browsers
-      - name: Install Playwright Browsers
+      - name: Install Playwright browsers
         run: npx playwright install
 
       # 5. Maven build
       - name: Maven build
         run: mvn clean install
 
-      # 6. Run Playwright tests
+      # 6. Run tests
       - name: Run tests
         run: mvn test
-        continue-on-error: true # чтобы шаги после тестов выполнялись даже при падении
+        continue-on-error: true  # workflow не падает если тесты упали
 
-      # 7. Save Allure results
+      # 7. Save Allure results as artifact
       - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: allure-results
+          path: target/allure-results
 
-      # 8. Generate Allure Report
+      # 8. Save screenshots as artifact
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: screenshots/**
+
+      # 9. Generate Allure Report
       - name: Generate Allure Report
-        run: |
-          mvn allure:report
+        run: mvn allure:report
 
-      # 9. Deploy Allure Report to GitHub Pages
+      # 10. Copy Allure report to root folder for deploy
+      - name: Prepare report for deploy
+        run: |
+          rm -rf allure-report
+          cp -r target/site/allure-maven allure-report
+
+      # 11. Deploy Allure Report to GitHub Pages
       - name: Deploy Allure Report
         if: always()
         uses: peaceiris/actions-gh-pages@v4
@@ -61,11 +75,3 @@ jobs:
           github_token: ${{ secrets.GH_PAT }}
           publish_dir: allure-report
           force_orphan: true
-
-      # 10. Upload screenshots as artifacts
-      - name: Upload screenshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: screenshots
-          path: screenshots/**
