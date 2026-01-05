@@ -65,7 +65,7 @@ jobs:
       - name: Prepare report for deploy
         run: |
           rm -rf allure-report
-          cp -r target/site/allure-maven allure-report
+          cp -r target/site/allure-maven-plugin allure-report
 
       # 11. Deploy Allure Report to GitHub Pages
       - name: Deploy Allure Report
