@@ -38,9 +38,9 @@ jobs:
       # 6. Run Playwright tests
       - name: Run tests
         run: mvn test
-        continue-on-error: true # ensures next steps run even if tests fail
+        continue-on-error: true # чтобы шаги после тестов выполнялись даже при падении
 
-      # Save allure-results
+      # 7. Save Allure results
       - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
@@ -48,7 +48,7 @@ jobs:
           name: allure-results
           path: allure-results
 
-      # Generate allure-report
+      # 8. Generate Allure Report
       - name: Generate Allure Report
         if: always()
         uses: simple-elf/allure-report-action@v1.7
@@ -56,17 +56,18 @@ jobs:
           allure_results: allure-results
           allure_report: allure-report
 
-      # Deploy to GitHub Pages
+      # 9. Deploy Allure Report to GitHub Pages
       - name: Deploy Allure Report
         if: always()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report
+          force_orphan: true
 
-      # 7. Upload screenshots as artifacts
+      # 10. Upload screenshots as artifacts
       - name: Upload screenshots
-        if: always()  # upload regardless of test result
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: screenshots
