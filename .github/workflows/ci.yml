@@ -15,14 +15,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Setup JDK
+      # 2. Setup Java 17
       - name: Setup Java 17
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: '17'
 
-      # 3. Setup Node.js for Playwright
+      # 3. Setup Node.js 18 for Playwright
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -39,7 +39,7 @@ jobs:
       # 6. Run tests
       - name: Run tests
         run: mvn test
-        continue-on-error: true  # workflow не падает если тесты упали
+        continue-on-error: true  # чтобы workflow не падал при падении тестов
 
       # 7. Save Allure results as artifact
       - name: Upload Allure results
@@ -57,17 +57,20 @@ jobs:
           name: screenshots
           path: screenshots/**
 
-      # 9. Generate Allure Report
-      - name: Generate Allure Report
-        run: mvn allure:report
-
-      # 10. Copy Allure report to root folder for deploy
-      - name: Prepare report for deploy
+      # 9. Install Allure CLI
+      - name: Install Allure CLI
         run: |
-          rm -rf allure-report
-          cp -r target/site/allure-maven-plugin allure-report
+          sudo apt-add-repository ppa:qameta/allure -y
+          sudo apt update
+          sudo apt install allure -y
 
-      # 11. Deploy Allure Report to GitHub Pages
+      # 10. Generate HTML report from allure-results
+      - name: Generate Allure HTML report
+        run: |
+          allure generate target/allure-results -o allure-report --clean
+          ls -R allure-report
+
+      # 11. Deploy Allure report to GitHub Pages
       - name: Deploy Allure Report
         if: always()
         uses: peaceiris/actions-gh-pages@v4
