@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  run-tests-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -39,17 +39,9 @@ jobs:
       # 6. Run tests
       - name: Run tests
         run: mvn test
-        continue-on-error: true  # workflow не падает если тесты упали
+        continue-on-error: true  # чтобы шаги после тестов выполнялись даже если упали
 
-      # 7. Save Allure results
-      - name: Upload Allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: target/allure-results
-
-      # 8. Save screenshots
+      # 7. Сохраняем артефакты
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -57,31 +49,9 @@ jobs:
           name: screenshots
           path: screenshots/**
 
-      # 9. Install Allure CLI
-      - name: Install Allure CLI
-        run: |
-          sudo apt-add-repository ppa:qameta/allure -y
-          sudo apt update
-          sudo apt install allure -y
-
-      # 10. Generate Allure HTML report
-      - name: Generate Allure HTML report
-        run: |
-          allure generate target/allure-results -o target/allure-maven --clean
-          ls -R target/allure-maven
-
-      # 11. Copy Allure report contents for deploy
-      - name: Prepare report for deploy
-        run: |
-          rm -rf allure-report
-          mkdir allure-report
-          cp -r target/allure-maven/* allure-report/
-
-      # 12. Deploy Allure Report to GitHub Pages
-      - name: Deploy Allure Report
+      - name: Upload test results
         if: always()
-        uses: peaceiris/actions-gh-pages@v4
+        uses: actions/upload-artifact@v4
         with:
-          github_token: ${{ secrets.GH_PAT }}
-          publish_dir: allure-report
-          force_orphan: true
+          name: test-results
+          path: target/surefire-reports/** # обычные Maven тестовые отчеты
