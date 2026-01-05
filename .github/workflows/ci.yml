@@ -50,11 +50,8 @@ jobs:
 
       # 8. Generate Allure Report
       - name: Generate Allure Report
-        if: always()
-        uses: simple-elf/allure-report-action@v1.7
-        with:
-          allure_results: allure-results
-          allure_report: allure-report
+        run: |
+          mvn allure:report
 
       # 9. Deploy Allure Report to GitHub Pages
       - name: Deploy Allure Report
