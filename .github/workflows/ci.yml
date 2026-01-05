@@ -40,6 +40,29 @@ jobs:
         run: mvn test
         continue-on-error: true # ensures next steps run even if tests fail
 
+      # Save allure-results
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      # Generate allure-report
+      - name: Generate Allure Report
+        if: always()
+        uses: simple-elf/allure-report-action@v1.7
+        with:
+          allure_results: allure-results
+          allure_report: allure-report
+
+      # Deploy to GitHub Pages
+      - name: Deploy Allure Report
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_dir: allure-report
+
       # 7. Upload screenshots as artifacts
       - name: Upload screenshots
         if: always()  # upload regardless of test result

@@ -7,3 +7,8 @@ target/
 /screenshots/
 *.png
 *.jpg
+
+# Allure
+allure-results/
+allure-report/
+.allure/
