@@ -12,7 +12,7 @@ jobs:
 
     steps:
       # 1. Checkout repository
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       # 2. Setup Java 17
@@ -22,7 +22,7 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      # 3. Setup Node.js 18 for Playwright
+      # 3. Setup Node.js 18
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -39,9 +39,9 @@ jobs:
       # 6. Run tests
       - name: Run tests
         run: mvn test
-        continue-on-error: true  # чтобы workflow не падал при падении тестов
+        continue-on-error: true  # workflow не падает если тесты упали
 
-      # 7. Save Allure results as artifact
+      # 7. Save Allure results
       - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
@@ -49,7 +49,7 @@ jobs:
           name: allure-results
           path: target/allure-results
 
-      # 8. Save screenshots as artifact
+      # 8. Save screenshots
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -64,13 +64,20 @@ jobs:
           sudo apt update
           sudo apt install allure -y
 
-      # 10. Generate HTML report from allure-results
+      # 10. Generate Allure HTML report
       - name: Generate Allure HTML report
         run: |
-          allure generate target/allure-results -o allure-report --clean
-          ls -R allure-report
+          allure generate target/allure-results -o target/allure-maven --clean
+          ls -R target/allure-maven
 
-      # 11. Deploy Allure report to GitHub Pages
+      # 11. Copy Allure report contents for deploy
+      - name: Prepare report for deploy
+        run: |
+          rm -rf allure-report
+          mkdir allure-report
+          cp -r target/allure-maven/* allure-report/
+
+      # 12. Deploy Allure Report to GitHub Pages
       - name: Deploy Allure Report
         if: always()
         uses: peaceiris/actions-gh-pages@v4
